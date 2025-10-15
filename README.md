@@ -130,10 +130,14 @@
 
 ---
 
-## 🐍 Contribution Snake Animation
+## 🦉 My GitHub Owl Animation
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/chekerh/chekerh/output/snake.svg" alt="snake animation" />
+  <img src="https://raw.githubusercontent.com/chekerh/chekerh/output/owl.svg" alt="Owl Flight Animation" width="100%"/>
+</p>
+
+<p align="center">
+  <em>The Owl of Wisdom glides through my commits every night 🦉✨</em>
 </p>
 
 ---
