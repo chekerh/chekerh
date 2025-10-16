@@ -118,7 +118,7 @@
 - **Year 1:** 2D platformer game (C, Linux/Arduino)  
 - **Year 2:** Smart Farm Management (Qt, RFID, LCD) + Job Recruitment Web App  
 - **Year 3:** EV Charging Management (Symfony → Java) with shared MySQL DB  
-- **Year 4:** Mobile specialization (Android/SwiftUI) + AI integrations
+- **Year 4:** Mobile specialization (Android/SwiftUI/Flutter) + AI integrations
 
 ---
 
