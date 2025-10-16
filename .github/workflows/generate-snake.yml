@@ -1,0 +1,28 @@
+name: 🐍 Generate Snake Game from GitHub Contributions
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Runs once a day at midnight UTC
+  workflow_dispatch:  # Can be triggered manually from the Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate Snake Game (from GitHub Contributions)
+        uses: Platane/snk@v3
+        with:
+          github_user_name: chekerh  # Your GitHub username
+          outputs: dist/github-snake.svg  # Output path
+          color_snake: "gold"  # Snake (Owl trail color)
+          color_dots: "#E5E5E5"  # Dots color gradient (from 0 to highest contributions)
+
+      - name: Deploy Snake Game to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist  # Directory with the output file
+          publish_branch: output  # The branch to publish to
