@@ -148,7 +148,7 @@
   <a href="mailto:your.chekerh2002@gmail.com">
     <img src="https://img.shields.io/badge/Email-0A66C2?style=for-the-badge&logo=gmail&logoColor=white" />
   </a>
-  <a href="https://www.linkedin.com/in/chekerh">
+  <a href="https://www.linkedin.com/in/cheker-hassan-928742179/">
     <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
   </a>
 
