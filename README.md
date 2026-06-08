@@ -1,10 +1,7 @@
-<!-- Animated Portfolio Banner -->
+<!-- Portfolio Hero SVG -->
 
 <p align="center">
-  <img 
-    src="https://capsule-render.vercel.app/api?type=waving&height=230&text=Cheker%20Hassan&fontAlign=50&fontAlignY=35&fontSize=60&fontColor=ffffff&color=0:020617,45:0f172a,100:0ea5e9&animation=fadeIn" 
-    alt="Cheker Hassan Banner"
-  />
+  <img src="./assets/hero.svg" alt="Cheker Hassan portfolio hero" width="100%" />
 </p>
 
 <h1 align="center">Hey 👋 I'm Cheker Hassan</h1>
