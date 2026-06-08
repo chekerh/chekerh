@@ -59,34 +59,12 @@ for week_index, week in enumerate(weeks):
             "y": 85 + day_index * 14,
         })
 
-# Lowest-commit days first, but avoid too many identical zero-only points.
-targets = sorted(days, key=lambda d: (d["count"], d["date"]))[:16]
+# Get lowest-commit days (targets to eat)
+targets = sorted(days, key=lambda d: (d["count"], d["date"]))[:12]
 
-# Add a few stronger days at the end so the eagle "levels up".
-high_days = sorted(days, key=lambda d: d["count"], reverse=True)[:5]
+# Add a few high-activity days for celebration
+high_days = sorted(days, key=lambda d: d["count"], reverse=True)[:4]
 path_days = targets + high_days
-
-points = " ".join([f"{d['x']},{d['y']}" for d in path_days])
-
-messages = []
-for d in path_days:
-    if d["count"] == 0:
-        label = f"{d['date']} · quiet day · {d['count']} commits"
-    elif d["count"] <= 2:
-        label = f"{d['date']} · low activity · {d['count']} commits"
-    elif d["count"] <= 8:
-        label = f"{d['date']} · building momentum · {d['count']} commits"
-    else:
-        label = f"{d['date']} · high-focus day · {d['count']} commits"
-    messages.append(label)
-
-message_values = "; ".join(messages)
-message_key_times = "; ".join(
-    [str(round(i / (len(messages) - 1), 3)) for i in range(len(messages))]
-)
-
-count_values = "; ".join([str(d["count"]) for d in path_days])
-date_values = "; ".join([d["date"] for d in path_days])
 
 rects = []
 for d in days:
@@ -96,27 +74,17 @@ for d in days:
         f'<rect x="{d["x"]}" y="{d["y"]}" width="10" height="10" rx="2" fill="{fill}" opacity="{opacity}"/>'
     )
 
-target_rings = []
-for d in path_days:
-    target_rings.append(
-        f'''
-        <circle cx="{d["x"] + 5}" cy="{d["y"] + 5}" r="8" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.65">
-          <animate attributeName="r" values="5;11;5" dur="2s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.2;0.9;0.2" dur="2s" repeatCount="indefinite"/>
-        </circle>
-        '''
-    )
-
-svg = f'''<svg width="920" height="320" viewBox="0 0 920 320" xmlns="http://www.w3.org/2000/svg">
+# SVG with professional design - NO BUBBLES/CIRCLES
+svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="920" y2="320">
-      <stop offset="0%" stop-color="#020617"/>
-      <stop offset="60%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#0ea5e9"/>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#020617;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0e4a7f;stop-opacity:1" />
     </linearGradient>
 
     <filter id="glow">
-      <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
       <feMerge>
         <feMergeNode in="coloredBlur"/>
         <feMergeNode in="SourceGraphic"/>
@@ -124,91 +92,91 @@ svg = f'''<svg width="920" height="320" viewBox="0 0 920 320" xmlns="http://www.
     </filter>
 
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+      
       .title {{
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 26px;
+        font-family: 'Inter', Arial, sans-serif;
+        font-size: 28px;
         font-weight: 800;
         fill: #ffffff;
+        letter-spacing: -0.5px;
       }}
 
       .subtitle {{
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 14px;
-        fill: #cbd5e1;
+        font-family: 'Inter', Arial, sans-serif;
+        font-size: 13px;
+        fill: #94a3b8;
+        font-weight: 500;
+        letter-spacing: 0.3px;
       }}
 
       .metric {{
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 18px;
-        font-weight: 800;
+        font-family: 'Inter', Arial, sans-serif;
+        font-size: 16px;
+        font-weight: 700;
         fill: #38bdf8;
+        text-anchor: middle;
       }}
 
-      .small {{
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 12px;
-        fill: #94a3b8;
+      .label {{
+        font-family: 'Inter', Arial, sans-serif;
+        font-size: 11px;
+        fill: #64748b;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
       }}
     </style>
   </defs>
 
-  <rect width="920" height="320" rx="26" fill="url(#bg)"/>
+  <!-- Background -->
+  <rect width="980" height="340" rx="18" fill="url(#bgGradient)" stroke="#1e293b" stroke-width="1"/>
 
-  <g opacity="0.22">
-    <path d="M0 70 C160 20 280 120 450 70 C650 10 740 115 920 50" fill="none" stroke="#38bdf8" stroke-width="3"/>
-    <path d="M0 105 C160 55 280 155 450 105 C650 45 740 150 920 85" fill="none" stroke="#ffffff" stroke-width="2"/>
+  <!-- Decorative waves -->
+  <g opacity="0.08">
+    <path d="M0 80 Q245 40 490 80 T980 80" fill="none" stroke="#38bdf8" stroke-width="2"/>
+    <path d="M0 120 Q245 100 490 120 T980 120" fill="none" stroke="#38bdf8" stroke-width="1.5"/>
   </g>
 
-  <text x="38" y="42" class="title">Contribution Eagle</text>
-  <text x="38" y="66" class="subtitle">Flying through the lowest-commit days first, then climbing toward high-focus days.</text>
+  <!-- Header -->
+  <text x="50" y="42" class="title">🦅 Contribution Eagle</text>
+  <text x="50" y="62" class="subtitle">Flying through your contribution calendar, hunting low-activity days</text>
 
-  <g>
+  <!-- Contribution grid -->
+  <g id="gridGroup">
     {''.join(rects)}
   </g>
 
-  <g>
-    {''.join(target_rings)}
+  <!-- Flight path (dashed line) -->
+  <polyline points="{' '.join([f'{d["x"] + 5},{d["y"] + 5}' for d in path_days])}" 
+    fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 6" opacity="0.5"/>
+
+  <!-- Eagle animation (moving along path with transformations) -->
+  <g id="eagleGroup" filter="url(#glow)">
+    <text x="55" y="90" font-size="32" fill="#ffffff" text-anchor="middle">🦅</text>
+    <animateMotion dur="18s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1">
+      <mpath href="#flightPath"/>
+    </animateMotion>
   </g>
 
-  <polyline points="{points}" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6 8" opacity="0.6"/>
+  <path id="flightPath" d="M {' L '.join([f'{d["x"] + 5} {d["y"] + 5}' for d in path_days])}" 
+    fill="none" stroke="transparent" stroke-width="1"/>
 
-  <g filter="url(#glow)">
-    <text font-size="30" x="0" y="0">🦅
-      <animateMotion dur="18s" repeatCount="indefinite" rotate="auto">
-        <mpath href="#flightPath"/>
-      </animateMotion>
-    </text>
-  </g>
+  <!-- Stats panel -->
+  <rect x="40" y="265" width="900" height="60" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1" opacity="0.9"/>
 
-  <path id="flightPath" d="M {' L '.join([f'{d["x"] + 1} {d["y"] + 1}' for d in path_days])}" fill="none" stroke="transparent"/>
+  <!-- Stats labels and values -->
+  <text x="90" y="285" class="label">Target Days</text>
+  <text x="90" y="310" class="metric">{len(path_days)}</text>
 
-  <rect x="38" y="245" width="844" height="48" rx="14" fill="#020617" opacity="0.82" stroke="#38bdf8" stroke-opacity="0.35"/>
+  <text x="280" y="285" class="label">Status</text>
+  <text x="280" y="310" class="metric">Active Hunt</text>
 
-  <text x="62" y="268" class="subtitle">
-    <animate attributeName="textContent"
-      dur="18s"
-      repeatCount="indefinite"
-      values="{message_values}"
-      keyTimes="{message_key_times}" />
-  </text>
+  <text x="500" y="285" class="label">Total Contributions</text>
+  <text x="500" y="310" class="metric">{sum(d["count"] for d in days)}</text>
 
-  <text x="62" y="288" class="small">Current target date:</text>
-  <text x="178" y="288" class="metric">
-    <animate attributeName="textContent"
-      dur="18s"
-      repeatCount="indefinite"
-      values="{date_values}"
-      keyTimes="{message_key_times}" />
-  </text>
-
-  <text x="650" y="288" class="small">Commits eaten:</text>
-  <text x="770" y="288" class="metric">
-    <animate attributeName="textContent"
-      dur="18s"
-      repeatCount="indefinite"
-      values="{count_values}"
-      keyTimes="{message_key_times}" />
-  </text>
+  <text x="750" y="285" class="label">Best Day</text>
+  <text x="750" y="310" class="metric">{max(d["count"] for d in days)} commits</text>
 </svg>
 '''
 
@@ -217,4 +185,5 @@ os.makedirs("dist", exist_ok=True)
 with open("dist/github-contribution-eagle.svg", "w", encoding="utf-8") as f:
     f.write(svg)
 
-print("Generated dist/github-contribution-eagle.svg")
+print("✅ Generated dist/github-contribution-eagle.svg")
+print(f"📊 Stats: {len(path_days)} target days, {sum(d['count'] for d in days)} total commits")
