@@ -4,18 +4,6 @@
   <img src="./assets/hero.svg" alt="Cheker Hassan portfolio hero" width="100%" />
 </p>
 
-<h1 align="center">Hey 👋 I'm Cheker Hassan</h1>
-
-<h3 align="center">
-  💻 Product-Minded Software Engineer • 📱 Mobile & Full-Stack Developer • 🧠 AI Builder • 🇹🇳 ESPRIT
-</h3>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Software%20Builder-International%20Engineering%20Teams-0ea5e9?style=for-the-badge&labelColor=020617" />
-  <img src="https://img.shields.io/badge/Full--Stack-Mobile%20%7C%20AI%20%7C%20DevOps-111827?style=for-the-badge&labelColor=0ea5e9" />
-  <img src="https://img.shields.io/badge/Based%20in-Nabeul%2C%20Tunisia-38bdf8?style=for-the-badge&labelColor=020617" />
-</p>
-
 ---
 
 ## 🧑‍🚀 Portfolio Identity
@@ -24,9 +12,9 @@
   <tr>
     <td width="62%" valign="middle">
 
-### Software builder for international engineering teams
+### Hey 👋 I'm Cheker Hassan
 
-I’m **Cheker Hassan**, a **4th-year Software Engineering student at ESPRIT**, based in **Nabeul, Tunisia**.
+I’m a **4th-year Software Engineering student at ESPRIT**, based in **Nabeul, Tunisia**.
 
 My engineering path started in **2015** with laptop repair curiosity, game-development experiments, and a strong culture of building and fixing things.
 
