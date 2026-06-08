@@ -6,10 +6,13 @@ from datetime import date, timedelta
 USERNAME = os.environ.get("GITHUB_USERNAME", "chekerh")
 TOKEN = os.environ["GITHUB_TOKEN"]
 
+DURATION = 24
+TARGET_COUNT = 14
+
 today = date.today()
 start = today - timedelta(days=365)
 
-query = '''
+query = """
 query($login: String!, $from: DateTime!, $to: DateTime!) {
   user(login: $login) {
     contributionsCollection(from: $from, to: $to) {
@@ -26,7 +29,7 @@ query($login: String!, $from: DateTime!, $to: DateTime!) {
     }
   }
 }
-'''
+"""
 
 variables = {
     "login": USERNAME,
@@ -52,6 +55,7 @@ if "errors" in data:
 weeks = data["data"]["user"]["contributionsCollection"]["contributionCalendar"]["weeks"]
 
 days = []
+
 for week_index, week in enumerate(weeks):
     for day_index, day in enumerate(week["contributionDays"]):
         days.append({
@@ -62,42 +66,124 @@ for week_index, week in enumerate(weeks):
             "y": 88 + day_index * 14,
         })
 
-# Important: use the lowest NON-ZERO commit days first.
-# If we target zero-commit days, "commits eaten" will always display 0.
+# Important:
+# If we target 0-commit days first, the counter will stay at 0.
+# So this targets the LOWEST NON-ZERO commit days first.
 positive_days = [d for d in days if d["count"] > 0]
-quiet_days = [d for d in days if d["count"] == 0]
+zero_days = [d for d in days if d["count"] == 0]
 
-targets = sorted(positive_days, key=lambda d: (d["count"], d["date"]))[:14]
+targets = sorted(positive_days, key=lambda d: (d["count"], d["date"]))[:TARGET_COUNT]
 
-# Fallback only if the account has fewer than 14 positive days in the last year.
-if len(targets) < 14:
-    targets += sorted(quiet_days, key=lambda d: d["date"])[: 14 - len(targets)]
+# Fallback only if there are not enough non-zero days.
+if len(targets) < TARGET_COUNT:
+    missing = TARGET_COUNT - len(targets)
+    targets += sorted(zero_days, key=lambda d: d["date"])[:missing]
 
 high_days = sorted(days, key=lambda d: d["count"], reverse=True)[:3]
 path_days = targets + high_days
 
-commits_eaten = sum(d["count"] for d in targets)
 total_contributions = sum(d["count"] for d in days)
+commits_eaten_total = sum(d["count"] for d in targets)
 best_day = max(days, key=lambda d: d["count"])
 
-rects = []
 target_dates = {d["date"] for d in targets}
+
+# Motion path.
+path_d = "M " + " L ".join([f'{d["x"] + 5} {d["y"] + 5}' for d in path_days])
+
+# Times when the eagle reaches each target.
+# These values are normalized from 0 to 1 for SVG animation keyTimes.
+target_times = []
+steps = max(len(path_days) - 1, 1)
+
+for index, _target in enumerate(targets):
+    target_times.append(index / steps)
+
+# Contribution grid.
+# No blue target rectangles.
+# No outlines.
+# Target cells fade after the eagle reaches them.
+rects = []
 
 for d in days:
     fill = d["color"] if d["count"] > 0 else "#161b22"
-    opacity = "1" if d["count"] > 0 else "0.64"
+    base_opacity = "1" if d["count"] > 0 else "0.62"
 
-    # No blue target rectangles, no stroke outlines.
-    # Targets are marked only by a subtle fill opacity change, not a visible blue box.
     if d["date"] in target_dates:
-        opacity = "1"
+        target_index = next(i for i, item in enumerate(targets) if item["date"] == d["date"])
+        t = target_times[target_index]
+        t2 = min(t + 0.025, 0.98)
 
-    rects.append(
-        f'<rect x="{d["x"]}" y="{d["y"]}" width="10" height="10" rx="2" '
-        f'fill="{fill}" opacity="{opacity}"/>'
+        rects.append(
+            f'''
+            <rect x="{d["x"]}" y="{d["y"]}" width="10" height="10" rx="2" fill="{fill}" opacity="{base_opacity}">
+              <animate
+                attributeName="opacity"
+                dur="{DURATION}s"
+                repeatCount="indefinite"
+                values="{base_opacity};{base_opacity};0.12;0.12;{base_opacity}"
+                keyTimes="0;{t:.4f};{t2:.4f};0.985;1"
+              />
+            </rect>
+            '''
+        )
+    else:
+        rects.append(
+            f'<rect x="{d["x"]}" y="{d["y"]}" width="10" height="10" rx="2" fill="{fill}" opacity="{base_opacity}"/>'
+        )
+
+# Animated counter.
+# SVG does not reliably support animating textContent on GitHub,
+# so we stack text values and animate opacity.
+cumulative_values = [0]
+running = 0
+
+for d in targets:
+    running += d["count"]
+    cumulative_values.append(running)
+
+counter_texts = []
+counter_times = [0]
+
+for index in range(len(targets)):
+    counter_times.append(min(target_times[index] + 0.025, 0.98))
+
+for index, value in enumerate(cumulative_values):
+    start_time = counter_times[index]
+
+    if index + 1 < len(counter_times):
+        end_time = counter_times[index + 1]
+    else:
+        end_time = 0.985
+
+    fade = 0.006
+
+    if index == 0:
+        key_times = f"0;{max(end_time - fade, 0.001):.4f};{end_time:.4f};1"
+        values = "1;1;0;0"
+    else:
+        s1 = max(start_time - fade, 0.001)
+        s2 = start_time
+        e1 = max(end_time - fade, s2 + 0.001)
+        e2 = end_time
+
+        key_times = f"0;{s1:.4f};{s2:.4f};{e1:.4f};{e2:.4f};1"
+        values = "0;0;1;1;0;0"
+
+    counter_texts.append(
+        f'''
+        <text x="115" y="311" class="metric" opacity="0">{value}
+          <animate
+            attributeName="opacity"
+            dur="{DURATION}s"
+            repeatCount="indefinite"
+            values="{values}"
+            keyTimes="{key_times}"
+          />
+        </text>
+        '''
     )
 
-path_d = "M " + " L ".join([f'{d["x"] + 5} {d["y"] + 5}' for d in path_days])
 target_dates_text = " • ".join([f'{d["date"]}({d["count"]})' for d in targets[:5]])
 
 svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.w3.org/2000/svg">
@@ -110,7 +196,7 @@ svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.
 
     <linearGradient id="eagleGold" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#fde68a"/>
-      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="48%" stop-color="#f59e0b"/>
       <stop offset="100%" stop-color="#92400e"/>
     </linearGradient>
 
@@ -174,25 +260,30 @@ svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.
     {''.join(rects)}
   </g>
 
-  <!-- Invisible route only. No bubbles, no target boxes, no dashed guide lines. -->
+  <!-- Invisible route only. No bubbles, no blue rectangles, no dashed direction line. -->
   <path id="flightPath" d="{path_d}" fill="none" stroke="none" stroke-width="0"/>
 
-  <!-- Vector eagle points naturally to the right; rotate=auto makes direction accurate along the path. -->
+  <!-- Vector eagle facing right. rotate='auto' makes it follow the real path direction. -->
   <g filter="url(#softGlow)">
     <g>
-      <animateMotion dur="22s" repeatCount="indefinite" rotate="auto">
+      <animateMotion dur="{DURATION}s" repeatCount="indefinite" rotate="auto">
         <mpath href="#flightPath"/>
       </animateMotion>
 
-      <!-- Eagle silhouette centered at 0,0 and facing right -->
       <g transform="scale(0.9)">
+        <!-- upper wing -->
         <path d="M-30 -4 C-48 -20 -66 -18 -82 -8 C-61 -9 -47 -4 -35 5 Z" fill="#1f2937"/>
+        <!-- lower wing -->
         <path d="M-28 4 C-46 22 -65 23 -82 13 C-60 13 -46 8 -34 -2 Z" fill="#111827"/>
+        <!-- feather detail -->
         <path d="M-34 -4 C-15 -18 4 -14 19 -2 C2 -6 -13 -3 -30 8 Z" fill="#374151"/>
         <path d="M-32 5 C-12 19 8 16 22 3 C4 7 -12 5 -30 -8 Z" fill="#1f2937"/>
+        <!-- body -->
         <ellipse cx="-8" cy="0" rx="25" ry="11" fill="url(#eagleGold)"/>
+        <!-- head/beak -->
         <path d="M12 -7 L34 0 L12 7 C18 2 18 -2 12 -7 Z" fill="#fbbf24"/>
         <circle cx="9" cy="-3" r="2" fill="#020617"/>
+        <!-- claws -->
         <path d="M-9 10 L-17 22 M0 10 L-7 24" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
         <path d="M-18 22 L-25 20 M-7 24 L-14 26" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
       </g>
@@ -202,7 +293,7 @@ svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.
   <rect x="40" y="263" width="900" height="62" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1" opacity="0.92"/>
 
   <text x="115" y="286" class="label">COMMITS EATEN</text>
-  <text x="115" y="311" class="metric">{commits_eaten}</text>
+  {''.join(counter_texts)}
 
   <text x="300" y="286" class="label">TARGET DAYS</text>
   <text x="300" y="311" class="metric">{len(targets)}</text>
@@ -223,7 +314,7 @@ with open("dist/github-contribution-eagle.svg", "w", encoding="utf-8") as f:
     f.write(svg)
 
 print("✅ Generated dist/github-contribution-eagle.svg")
-print(f"🦅 Commits eaten: {commits_eaten}")
+print(f"🦅 Final commits eaten: {commits_eaten_total}")
 print(f"🎯 Target days: {len(targets)}")
 print(f"📊 Total contributions: {total_contributions}")
 print(f"🏆 Best day: {best_day['date']} with {best_day['count']} commits")
