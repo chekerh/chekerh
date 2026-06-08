@@ -14,7 +14,7 @@
 
 ### Hey 👋 I'm Cheker Hassan
 
-I’m a **4th-year Software Engineering student at ESPRIT**, based in **Nabeul, Tunisia**.
+I'm a **4th-year Software Engineering student at ESPRIT**, based in **Nabeul, Tunisia**.
 
 My engineering path started in **2015** with laptop repair curiosity, game-development experiments, and a strong culture of building and fixing things.
 
@@ -244,10 +244,10 @@ I care about software that is practical, understandable, and useful for real use
 
 ---
 
-## 🐍 Contribution Snake
+## 🦅 Contribution Eagle
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/chekerh/chekerh/output/github-contribution-grid-snake-dark.svg" alt="GitHub contribution snake animation" />
+  <img src="https://raw.githubusercontent.com/chekerh/chekerh/output/github-contribution-eagle.svg" alt="Contribution eagle animation" />
 </p>
 
 ---
