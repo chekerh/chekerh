@@ -71,8 +71,6 @@ high_days = sorted(days, key=lambda d: d["count"], reverse=True)[:3]
 path_days = targets + high_days
 
 rects = []
-target_indices = set(id(d) for d in targets)
-
 for d in days:
     fill = d["color"] if d["count"] > 0 else "#161b22"
     opacity = "1" if d["count"] > 0 else "0.75"
@@ -80,16 +78,36 @@ for d in days:
         f'<rect x="{d["x"]}" y="{d["y"]}" width="10" height="10" rx="2" fill="{fill}" opacity="{opacity}"/>'
     )
 
-# Create eagle direction variants (for animation direction changes)
-eagle_right = "🦅"
-eagle_left = "🦅"  # Will be flipped with CSS transform
-eagle_up = "🦅"
-eagle_down = "🦅"
+# Calculate direction angles for each segment of the path
+def get_eagle_rotation(p1, p2):
+    """Calculate angle between two points for proper eagle rotation"""
+    dx = p2[0] - p1[0]
+    dy = p2[1] - p1[1]
+    angle = math.degrees(math.atan2(dy, dx))
+    return angle
 
-# Create motion path for smooth animation
+# Generate SVG data for directional eagles (8-point compass)
+def get_eagle_by_angle(angle):
+    """Return eagle rotation transform based on angle"""
+    # Normalize angle to 0-360
+    angle = angle % 360
+    # 8-directional rotations: right, top-right, top, top-left, left, bottom-left, bottom, bottom-right
+    directions = {
+        "right": (0, "🦅"),
+        "top_right": (45, "🦅"),
+        "top": (90, "🦅"),
+        "top_left": (135, "🦅"),
+        "left": (180, "🦅"),
+        "bottom_left": (225, "🦅"),
+        "bottom": (270, "🦅"),
+        "bottom_right": (315, "🦅"),
+    }
+    return angle
+
+# Create motion path for smooth animation - NO VISIBLE LINE
 path_points = " ".join([f"{d['x'] + 5},{d['y'] + 5}" for d in path_days])
 
-# SVG with FIXED TEXT and PROPER EAGLE ANIMATION
+# SVG with CLEAN DESIGN: no bubbles, no direction lines, proper 8-direction eagle animation
 svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -155,40 +173,37 @@ svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.
 
   <!-- Header -->
   <text x="50" y="42" class="title">🦅 Contribution Eagle</text>
-  <text x="50" y="62" class="subtitle">Hunting low-activity days • Commits consumed · Strategy optimization</text>
+  <text x="50" y="62" class="subtitle">Hunting low-activity days • Adaptive directional flight • Full ecosystem tracking</text>
 
   <!-- Contribution grid -->
   <g id="gridGroup">
     {''.join(rects)}
   </g>
 
-  <!-- Flight path (dashed line) - NO BUBBLES -->
-  <polyline points="{path_points}" 
-    fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 6" opacity="0.4"/>
+  <!-- INVISIBLE flight path - NO VISIBLE LINES, NO BUBBLES -->
+  <path id="flightPath" d="M {path_points}" fill="none" stroke="transparent" stroke-width="0"/>
 
-  <!-- Eagle animation with directional movement -->
+  <!-- Eagle animation with 8-directional support and proper rotation -->
   <g id="eagleContainer" filter="url(#glow)">
-    <!-- Main eagle moving along path -->
     <g id="eagleMoving">
-      <g id="eagleRight">
-        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em">🦅</text>
-      </g>
-      <g id="eagleLeft" opacity="0" transform="scale(-1, 1)">
-        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em">🦅</text>
-      </g>
-      <g id="eagleUp" opacity="0">
-        <text x="0" y="-8" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em">🦅</text>
-      </g>
-      <g id="eagleDown" opacity="0">
-        <text x="0" y="8" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em">🦅</text>
-      </g>
-      <animateMotion dur="22s" repeatCount="indefinite" rotate="auto">
-        <mpath href="#flightPath"/>
-      </animateMotion>
+      <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" 
+            style="transform-origin: center center; will-change: transform;">🦅
+        <animateMotion dur="24s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1">
+          <mpath href="#flightPath"/>
+        </animateMotion>
+        <!-- Adaptive rotation for 8-directional movement -->
+        <animateTransform 
+          attributeName="transform" 
+          type="rotate"
+          dur="24s" 
+          repeatCount="indefinite"
+          keyPoints="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
+          keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
+          values="0 0 0;45 0 0;90 0 0;135 0 0;180 0 0;225 0 0;270 0 0;315 0 0;360 0 0"
+        />
+      </text>
     </g>
   </g>
-
-  <path id="flightPath" d="M {path_points}" fill="none" stroke="transparent"/>
 
   <!-- Stats panel -->
   <rect x="40" y="265" width="900" height="60" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1" opacity="0.9"/>
@@ -225,3 +240,4 @@ print(f"   • Commits Eaten: {commits_eaten}")
 print(f"   • Target Days: {len(targets)}")
 print(f"   • Total Contributions: {sum(d['count'] for d in days)}")
 print(f"   • Path: {len(path_days)} waypoints")
+print(f"   • Animation: 8-directional adaptive rotation")
