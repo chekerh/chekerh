@@ -1,44 +1,123 @@
 <!-- Animated Banner -->
+
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=wave&height=200&text=Cheker%20Hassan&fontAlign=50&fontColor=ffffff&color=0:0f172a,100:0ea5e9" alt="banner"/>
 </p>
 
 <h1 align="center">Hey 👋 I'm Cheker Hassan</h1>
-<h3 align="center">💻 Software Engineer • 📱 Mobile Developer • 🧠 AI Explorer • 🇹🇳 ESPRIT</h3>
+
+<h3 align="center">💻 Product-Minded Software Engineer • 📱 Mobile & Full-Stack Developer • 🧠 AI Builder • 🇹🇳 ESPRIT</h3>
 
 ---
 
 ## 🌟 About Me
 
-> I’m **Cheker Hassan**, a 23-year-old Software Engineering student at **ESPRIT University (Tunisia)**.  
-> I believe technology should make life easier so we can focus on what really matters.  
->  
-> I thrive in **teamwork**, love **innovation**, and constantly learn new tools to create impactful, human-centered software.  
->  
-> I’m currently specializing in **mobile development** (Android & iOS) and exploring **AI integration** in everyday apps — like my **ASL gesture recognition model** for the IEEE SIGHT Challenge.
+> I’m **Cheker Hassan**, a **4th-year Software Engineering student at ESPRIT**, based in **Nabeul, Tunisia**.
 
-📚 **Currently learning:** SwiftUI • UIKit • Android Studio • Next.js • NestJS • Spring Boot  
-⚙️ **Love working with:** Arduino • MySQL • Java • C++ • React • Symfony  
-🎯 **Goal:** Build scalable and useful apps that make life simpler.
+> My engineering path started in **2015** with laptop repair curiosity, game-development experiments, and a strong culture of building and fixing things.
+
+> Today, I build practical software across **full-stack web**, **mobile apps**, **AI tools**, **DevOps**, **security readiness**, and **IoT/RFID systems**.
+
+> I enjoy turning ambiguous ideas into **architecture, Jira tasks, working prototypes, documentation, QA/security reviews, and demo-ready products**.
+
+> My current focus is building product systems like **CogniCare**, **WayFinder**, **Sahara / MyOwnCursor**, **Attaque**, and **UtopiaHire**.
+
+📚 **Currently focused on:** Full-Stack Engineering • Mobile Development • AI Integration • DevOps • Product Systems
+
+⚙️ **Love working with:** TypeScript • Java • Kotlin • SwiftUI • NestJS • React • MongoDB • Docker • AI Tools
+
+🎯 **Goal:** Build useful, scalable, and human-centered software that solves real problems.
+
+💡 **Motto:** Your imagination is my limit.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### 💬 Languages
-`C` `C++` `Java` `JavaScript` `PHP` `SQL` `Python (basics)`
 
-### 🌐 Frameworks & Tools
-`Next.js` `Symfony` `Spring Boot` `NestJS` `Qt Creator`
+`Java` `TypeScript` `JavaScript` `Python` `C` `C++` `C#` `PHP` `SQL` `Kotlin` `Swift`
 
-### 📱 Mobile Development
-`Android Studio` `Kotlin` `SwiftUI` `UIKit`
+### 🌐 Web & Backend
 
-### 🔩 Embedded Systems
-`Arduino` `RFID` `LCD Display` `Sensors`
+`React` `Next.js` `Node.js` `Express.js` `NestJS` `Fastify` `Spring Boot` `Symfony` `Flask` `.NET exposure`
 
-### 🧠 Databases & Others
-`MySQL` `phpMyAdmin` `Git` `VMware (Linux)` `IntelliJ IDEA` `VS Code`
+### 📱 Mobile & Desktop
+
+`Android Studio` `Kotlin` `Jetpack Compose` `SwiftUI` `UIKit` `Flutter` `JavaFX` `Electron`
+
+### 🧠 AI & Automation
+
+`OpenAI APIs` `Prompt Engineering` `Ollama / Local AI` `MCP` `TensorFlow` `OpenCV` `AI-assisted workflows`
+
+### 🗄️ Databases
+
+`MongoDB` `PostgreSQL` `MySQL` `SQLite` `Prisma` `Mongoose`
+
+### 🚀 DevOps, Security & Tools
+
+`Git` `GitHub` `Docker` `Jenkins` `SonarQube` `CI/CD` `Redis` `BullMQ` `JWT` `CORS` `Helmet` `Jira`
+
+### 🔩 IoT & Hardware
+
+`Arduino` `ESP-class boards` `RFID / RC522` `Sensors` `LCD Display` `Hardware-to-web integration`
+
+---
+
+## 🚀 Featured Projects
+
+### 🧩 CogniCare Ecosystem
+
+A social-impact care platform built around autism-care workflows, mobile access, web dashboards, role-based features, realtime communication, and AI recommendations.
+
+`Flutter` `NestJS` `MongoDB` `React` `Jira` `Docker` `Jenkins` `SonarQube`
+
+### 🧭 WayFinder Travel Platform
+
+A cross-platform travel discovery and booking system with Android, iOS, backend APIs, authentication, booking/payment flows, WebSockets, push notifications, and AI travel assistance.
+
+`Kotlin` `Jetpack Compose` `SwiftUI` `NestJS` `MongoDB` `Redis` `Swagger`
+
+### 🧠 Sahara / MyOwnCursor
+
+A local-first AI IDE built with desktop tooling, Monaco editor, terminal integration, semantic search, local AI workflows, and MCP support.
+
+`Electron` `React` `TypeScript` `Monaco` `SQLite` `Express` `Ollama`
+
+### 🛡️ Attaque Security Readiness Platform
+
+A defensive security-readiness platform focused on authorized checks, reports, learning modules, community features, async jobs, and secure backend workflows.
+
+`Next.js` `Fastify` `Prisma` `PostgreSQL` `Redis` `BullMQ` `JWT`
+
+### 📄 UtopiaHire Career Tool
+
+An AI-powered career-support platform for resume review, rewriting workflows, admin dashboards, user authentication, analytics, and QA/security documentation.
+
+`React` `Vite` `TypeScript` `Express` `MongoDB` `OpenAI API`
+
+### 🏷️ Systeme de Pointage
+
+An RFID attendance and management system connecting hardware logic with a Flask dashboard, SQLite logs, employee monitoring, and reporting.
+
+`Arduino` `RFID` `Python` `Flask` `SQLite`
+
+---
+
+## 👥 Leadership & Community
+
+- **Project coordination:** Coordinated a **17-student engineering group** using Jira tasks, priorities, reviews, and delivery checkpoints.
+- **IEEE WIE Challenge:** Lead engineer for an accessible, mobile-first official event website.
+- **IEEE RAS Challenge:** Worked on gesture-driven robotics control and automation exploration.
+- **IEEE PES Challenge:** Explored AI + IoT dashboard concepts for energy monitoring.
+- **ACM / Problem Solving Club:** Practiced algorithmic thinking and trained with LeetCode / Codeforces-style problems.
+- **JCI Nabeul & Inactus ESPRIT:** Active in youth leadership, community service, and social entrepreneurship.
+
+---
+
+## 🌍 Languages
+
+`Arabic` Native • `French` Fluent • `English` Advanced • `German` Learning
 
 ---
 
@@ -55,107 +134,4 @@
 
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=chekerh&color=blue&style=for-the-badge" />
-</p>
-
----
-
-## 🧩 Featured Projects
-
-### 🛒 Otech — E-commerce Website  
-> A full e-commerce platform for a local brand, focused on reliability and UX.  
-**Stack:** Next.js • MySQL  
-- Product catalog, cart, checkout  
-- Clean UI and fast performance  
-- Payment workflow  
-🔗 [GitHub Repository](https://github.com/chekerh/otech)
-
----
-
-### 🕓 Systeme de Pointage  
-> A low-cost, reliable attendance system used by multiple companies.  
-**Stack:** PHP • HTML • MySQL  
-- Tracks time for up to 20 employees  
-- Generates automated PDF reports  
-🔗 [GitHub Repository](https://github.com/chekerh/systeme-de-pointage)
-
----
-
-### 🧠 MatlatPro — Java Store Management with AI  
-> Java desktop app to manage products, employees, and sales with AI insights.  
-**Stack:** Java • MySQL • Machine Learning  
-- Predicts when to restock or apply discounts  
-- Simple, intuitive UI  
-🔗 [GitHub Repository](https://github.com/chekerh/MatelasFlow)
-
----
-
-### ✋ ASL Gesture Recognition (In Progress)  
-> Computer vision project for **American Sign Language recognition** to enhance accessibility.  
-**Stack:** Python • OpenCV • TensorFlow/Keras  
-- Real-time gesture classification  
-- Designed for IEEE SIGHT Challenge  
-🔗 [GitHub Repository](https://github.com/chekerh/asl-gesture)
-
----
-
-## ⚡ IEEE Projects & Challenges
-
-| Challenge | Description |
-|------------|--------------|
-| 🌍 **WIE Challenge** | Building the official website with clean UI & accessibility focus |
-| 🤖 **RAS Challenge** | Gesture-driven robotics control & automation |
-| ⚡ **PES Challenge** | AI + IoT for smarter energy optimization |
-| ✋ **SIGHT Challenge** | ASL gesture recognition for accessibility (Humanitarian Tech) |
-
----
-
-## 🎓 Education
-
-🎓 **ESPRIT – University of Engineering (Tunisia)**  
-**Degree:** Software Engineering (Graduating 2026)  
-
-**Highlights:**  
-- **Year 1:** 2D platformer game (C, Linux/Arduino)  
-- **Year 2:** Smart Farm Management (Qt, RFID, LCD) + Job Recruitment Web App  
-- **Year 3:** EV Charging Management (Symfony → Java) with shared MySQL DB  
-- **Year 4:** Mobile specialization (Android/SwiftUI/Flutter) + AI integrations
-
----
-
-## 🧮 GitHub Metrics (Auto-Updating Dashboard)
-
-<p align="center">
-  <img src="https://github.com/chekerh/chekerh/blob/main/github-metrics.svg" alt="Metrics" width="100%">
-</p>
-
----
-
-## 🦉 My GitHub Owl Animation
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/chekerh/chekerh/output/owl.svg" alt="Owl Flight Animation" width="100%"/>
-</p>
-
-<p align="center">
-  <em>The Owl of Wisdom glides through my commits every night 🦉✨</em>
-</p>
-
----
-
-## 🤝 Connect With Me
-
-<p align="center">
-  <a href="mailto:your.chekerh2002@gmail.com">
-    <img src="https://img.shields.io/badge/Email-0A66C2?style=for-the-badge&logo=gmail&logoColor=white" />
-  </a>
-  <a href="https://www.linkedin.com/in/cheker-hassan-928742179/">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
-  </a>
-
-</p>
-
----
-
-<p align="center">
-  🧠 *“Technology should make life easier — so we can focus on what really matters.”*  
 </p>
