@@ -247,7 +247,7 @@ I care about software that is practical, understandable, and useful for real use
 ## 🦅 Contribution Eagle
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/chekerh/chekerh/output/github-contribution-eagle.svg" alt="Contribution eagle animation" />
+  <img src="https://raw.githubusercontent.com/chekerh/chekerh/output/github-contribution-eagle.svg?t=1" alt="Contribution eagle animation" />
 </p>
 
 ---
