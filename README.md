@@ -48,6 +48,14 @@ I enjoy turning ambiguous ideas into **architecture, Jira tasks, working prototy
 
 ---
 
+## 🐍 Contribution Snake
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/chekerh/chekerh/output/github-contribution-grid-snake-dark.svg" alt="GitHub contribution snake animation" />
+</p>
+
+---
+
 ## 🛠️ Tech Stack
 
 ### 💬 Languages
@@ -246,8 +254,10 @@ I care about software that is practical, understandable, and useful for real use
 
 ## 🦅 Contribution Eagle
 
+> 🚧 **Work in progress:** this custom eagle animation is still being improved.
+
 <p align="center">
-  <img src="https://raw.githubusercontent.com/chekerh/chekerh/output/github-contribution-eagle.svg?t=1" alt="Contribution eagle animation" />
+  <img src="https://raw.githubusercontent.com/chekerh/chekerh/output/github-contribution-eagle.svg" alt="Contribution eagle animation" />
 </p>
 
 ---
