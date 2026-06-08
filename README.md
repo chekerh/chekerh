@@ -2,7 +2,7 @@
 
 <p align="center">
   <img 
-    src="https://capsule-render.vercel.app/api?type=waving&height=240&text=Cheker%20Hassan&fontAlign=50&fontAlignY=32&fontSize=64&fontColor=ffffff&color=0:020617,45:0f172a,100:0ea5e9&animation=fadeIn" 
+    src="https://capsule-render.vercel.app/api?type=waving&height=220&text=Cheker%20Hassan&fontAlign=50&fontAlignY=35&fontSize=58&fontColor=ffffff&color=0:020617,45:0f172a,100:0ea5e9&animation=fadeIn" 
     alt="Cheker Hassan Banner"
   />
 </p>
@@ -52,6 +52,14 @@ I enjoy turning ambiguous ideas into **architecture, Jira tasks, working prototy
   </td>
   </tr>
 </table>
+
+---
+
+## ⚡ Tech Galaxy
+
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=java,ts,js,python,cpp,cs,php,kotlin,swift,react,nextjs,nodejs,nestjs,spring,flutter,mongodb,postgres,mysql,docker,jenkins,git,github,linux,figma&perline=8" />
+</p>
 
 ---
 
@@ -156,28 +164,6 @@ An RFID attendance and management system connecting hardware logic with a Flask 
 
 ---
 
-## 👥 Leadership & Community
-
-- **Project coordination:** Coordinated a **17-student engineering group** using Jira tasks, priorities, reviews, and delivery checkpoints.
-- **IEEE WIE Challenge:** Lead engineer for an accessible, mobile-first official event website.
-- **IEEE RAS Challenge:** Worked on gesture-driven robotics control and automation exploration.
-- **IEEE PES Challenge:** Explored AI + IoT dashboard concepts for energy monitoring.
-- **ACM / Problem Solving Club:** Practiced algorithmic thinking and trained with LeetCode / Codeforces-style problems.
-- **JCI Nabeul & Inactus ESPRIT:** Active in youth leadership, community service, and social entrepreneurship.
-
----
-
-## 🌍 Languages
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Arabic-Native-0ea5e9?style=for-the-badge&labelColor=020617" />
-  <img src="https://img.shields.io/badge/French-Fluent-0ea5e9?style=for-the-badge&labelColor=020617" />
-  <img src="https://img.shields.io/badge/English-Advanced-0ea5e9?style=for-the-badge&labelColor=020617" />
-  <img src="https://img.shields.io/badge/German-Learning-0ea5e9?style=for-the-badge&labelColor=020617" />
-</p>
-
----
-
 ## 🧑‍💻 Engineering Style
 
 <table>
@@ -199,6 +185,59 @@ I care about software that is practical, understandable, and useful for real use
 
 ---
 
+## 🌍 International Readiness
+
+<table>
+  <tr>
+    <td width="65%">
+
+- Available for **international software engineering internships** and junior engineering opportunities.
+- Comfortable working across **full-stack, mobile, AI integration, DevOps, and product systems**.
+- Strong fit for teams that value ownership, documentation, practical delivery, and fast learning.
+- Comfortable collaborating in **Arabic, French, English**, and currently learning **German**.
+
+  </td>
+  <td width="35%" align="center">
+    <img src="./assets/pose-globe.webp" width="240" alt="Cheker Hassan global character" />
+  </td>
+  </tr>
+</table>
+
+---
+
+## 👥 Leadership & Community
+
+<table>
+  <tr>
+    <td width="35%" align="center">
+      <img src="./assets/pose-education.webp" width="230" alt="Cheker Hassan education character" />
+    </td>
+    <td width="65%">
+
+- **Project coordination:** Coordinated a **17-student engineering group** using Jira tasks, priorities, reviews, and delivery checkpoints.
+- **IEEE WIE Challenge:** Lead engineer for an accessible, mobile-first official event website.
+- **IEEE RAS Challenge:** Worked on gesture-driven robotics control and automation exploration.
+- **IEEE PES Challenge:** Explored AI + IoT dashboard concepts for energy monitoring.
+- **ACM / Problem Solving Club:** Practiced algorithmic thinking and trained with LeetCode / Codeforces-style problems.
+- **JCI Nabeul & Inactus ESPRIT:** Active in youth leadership, community service, and social entrepreneurship.
+
+  </td>
+  </tr>
+</table>
+
+---
+
+## 🌍 Languages
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Arabic-Native-0ea5e9?style=for-the-badge&labelColor=020617" />
+  <img src="https://img.shields.io/badge/French-Fluent-0ea5e9?style=for-the-badge&labelColor=020617" />
+  <img src="https://img.shields.io/badge/English-Advanced-0ea5e9?style=for-the-badge&labelColor=020617" />
+  <img src="https://img.shields.io/badge/German-Learning-0ea5e9?style=for-the-badge&labelColor=020617" />
+</p>
+
+---
+
 ## 📈 GitHub Analytics
 
 <p align="center">
@@ -212,10 +251,30 @@ I care about software that is practical, understandable, and useful for real use
 
 ---
 
+## 📊 GitHub Metrics
+
+<p align="center">
+  <img src="./github-metrics.svg" alt="GitHub metrics" />
+</p>
+
+---
+
 ## 🐍 Contribution Snake
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/chekerh/chekerh/output/github-contribution-grid-snake-dark.svg" alt="GitHub contribution snake animation" />
+</p>
+
+---
+
+## 🧭 Portfolio Guide
+
+<p align="center">
+  <img src="./assets/pose-wave.webp" width="160" />
+  <img src="./assets/pose-code.webp" width="160" />
+  <img src="./assets/pose-globe.webp" width="160" />
+  <img src="./assets/pose-education.webp" width="160" />
+  <img src="./assets/pose-experience.webp" width="160" />
 </p>
 
 ---
