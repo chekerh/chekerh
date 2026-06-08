@@ -2,7 +2,6 @@ import os
 import json
 import urllib.request
 from datetime import date, timedelta
-import math
 
 USERNAME = os.environ.get("GITHUB_USERNAME", "chekerh")
 TOKEN = os.environ["GITHUB_TOKEN"]
@@ -70,6 +69,7 @@ commits_eaten = sum(d["count"] for d in targets)
 high_days = sorted(days, key=lambda d: d["count"], reverse=True)[:3]
 path_days = targets + high_days
 
+# Build contribution grid rectangles
 rects = []
 for d in days:
     fill = d["color"] if d["count"] > 0 else "#161b22"
@@ -78,36 +78,90 @@ for d in days:
         f'<rect x="{d["x"]}" y="{d["y"]}" width="10" height="10" rx="2" fill="{fill}" opacity="{opacity}"/>'
     )
 
-# Calculate direction angles for each segment of the path
-def get_eagle_rotation(p1, p2):
-    """Calculate angle between two points for proper eagle rotation"""
-    dx = p2[0] - p1[0]
-    dy = p2[1] - p1[1]
-    angle = math.degrees(math.atan2(dy, dx))
-    return angle
-
-# Generate SVG data for directional eagles (8-point compass)
-def get_eagle_by_angle(angle):
-    """Return eagle rotation transform based on angle"""
-    # Normalize angle to 0-360
-    angle = angle % 360
-    # 8-directional rotations: right, top-right, top, top-left, left, bottom-left, bottom, bottom-right
-    directions = {
-        "right": (0, "🦅"),
-        "top_right": (45, "🦅"),
-        "top": (90, "🦅"),
-        "top_left": (135, "🦅"),
-        "left": (180, "🦅"),
-        "bottom_left": (225, "🦅"),
-        "bottom": (270, "🦅"),
-        "bottom_right": (315, "🦅"),
-    }
-    return angle
-
-# Create motion path for smooth animation - NO VISIBLE LINE
+# Create invisible flight path - NO VISIBLE STROKE
 path_points = " ".join([f"{d['x'] + 5},{d['y'] + 5}" for d in path_days])
 
-# SVG with CLEAN DESIGN: no bubbles, no direction lines, proper 8-direction eagle animation
+# Create 8-directional eagle animations using opacity transitions
+# Each direction shows/hides based on animation progress
+eagle_animations = []
+directions = [
+    ("→", 0, "0deg"),      # Right
+    ("↗", 1, "45deg"),     # Top-right
+    ("↑", 2, "90deg"),     # Up
+    ("↖", 3, "135deg"),    # Top-left
+    ("←", 4, "180deg"),    # Left
+    ("↙", 5, "225deg"),    # Bottom-left
+    ("↓", 6, "270deg"),    # Down
+    ("↘", 7, "315deg"),    # Bottom-right
+]
+
+# Build eagle keyframes for smooth direction cycling
+eagle_keyframes = '''
+    <style>
+      @keyframes eagleDirection {
+        0% { opacity: 1; }
+        12.5% { opacity: 0; }
+        100% { opacity: 0; }
+      }
+      @keyframes eagleDirection1 {
+        0% { opacity: 0; }
+        12.5% { opacity: 1; }
+        25% { opacity: 0; }
+        100% { opacity: 0; }
+      }
+      @keyframes eagleDirection2 {
+        0% { opacity: 0; }
+        25% { opacity: 1; }
+        37.5% { opacity: 0; }
+        100% { opacity: 0; }
+      }
+      @keyframes eagleDirection3 {
+        0% { opacity: 0; }
+        37.5% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 0; }
+      }
+      @keyframes eagleDirection4 {
+        0% { opacity: 0; }
+        50% { opacity: 1; }
+        62.5% { opacity: 0; }
+        100% { opacity: 0; }
+      }
+      @keyframes eagleDirection5 {
+        0% { opacity: 0; }
+        62.5% { opacity: 1; }
+        75% { opacity: 0; }
+        100% { opacity: 0; }
+      }
+      @keyframes eagleDirection6 {
+        0% { opacity: 0; }
+        75% { opacity: 1; }
+        87.5% { opacity: 0; }
+        100% { opacity: 0; }
+      }
+      @keyframes eagleDirection7 {
+        0% { opacity: 0; }
+        87.5% { opacity: 1; }
+        100% { opacity: 0; }
+      }
+      .eagle-dir {
+        animation-duration: 24s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+      }
+    </style>
+'''
+
+# Build eagle direction groups
+eagle_groups = ""
+for idx, (symbol, order, angle) in enumerate(directions):
+    eagle_groups += f'''
+    <g class="eagle-dir" style="animation-name: eagleDirection{idx};">
+      <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">{symbol}</text>
+    </g>
+    '''
+
+# Main SVG
 svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -115,14 +169,6 @@ svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.
       <stop offset="50%" style="stop-color:#0f172a;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#0e4a7f;stop-opacity:1" />
     </linearGradient>
-
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
 
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
@@ -159,6 +205,58 @@ svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.
         text-transform: uppercase;
         letter-spacing: 0.8px;
       }}
+
+      @keyframes eagleDirection {{
+        0% {{ opacity: 1; }}
+        12.5% {{ opacity: 0; }}
+        100% {{ opacity: 0; }}
+      }}
+      @keyframes eagleDirection1 {{
+        0% {{ opacity: 0; }}
+        12.5% {{ opacity: 1; }}
+        25% {{ opacity: 0; }}
+        100% {{ opacity: 0; }}
+      }}
+      @keyframes eagleDirection2 {{
+        0% {{ opacity: 0; }}
+        25% {{ opacity: 1; }}
+        37.5% {{ opacity: 0; }}
+        100% {{ opacity: 0; }}
+      }}
+      @keyframes eagleDirection3 {{
+        0% {{ opacity: 0; }}
+        37.5% {{ opacity: 1; }}
+        50% {{ opacity: 0; }}
+        100% {{ opacity: 0; }}
+      }}
+      @keyframes eagleDirection4 {{
+        0% {{ opacity: 0; }}
+        50% {{ opacity: 1; }}
+        62.5% {{ opacity: 0; }}
+        100% {{ opacity: 0; }}
+      }}
+      @keyframes eagleDirection5 {{
+        0% {{ opacity: 0; }}
+        62.5% {{ opacity: 1; }}
+        75% {{ opacity: 0; }}
+        100% {{ opacity: 0; }}
+      }}
+      @keyframes eagleDirection6 {{
+        0% {{ opacity: 0; }}
+        75% {{ opacity: 1; }}
+        87.5% {{ opacity: 0; }}
+        100% {{ opacity: 0; }}
+      }}
+      @keyframes eagleDirection7 {{
+        0% {{ opacity: 0; }}
+        87.5% {{ opacity: 1; }}
+        100% {{ opacity: 0; }}
+      }}
+      .eagle-dir {{
+        animation-duration: 24s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+      }}
     </style>
   </defs>
 
@@ -173,42 +271,53 @@ svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.
 
   <!-- Header -->
   <text x="50" y="42" class="title">🦅 Contribution Eagle</text>
-  <text x="50" y="62" class="subtitle">Hunting low-activity days • Adaptive directional flight • Full ecosystem tracking</text>
+  <text x="50" y="62" class="subtitle">Hunting low-activity days • 8-directional adaptive flight • Real-time tracking</text>
 
   <!-- Contribution grid -->
   <g id="gridGroup">
     {''.join(rects)}
   </g>
 
-  <!-- INVISIBLE flight path - NO VISIBLE LINES, NO BUBBLES -->
-  <path id="flightPath" d="M {path_points}" fill="none" stroke="transparent" stroke-width="0"/>
+  <!-- INVISIBLE flight path - NO BUBBLES, NO VISIBLE LINES -->
+  <path id="flightPath" d="M {path_points}" fill="none" stroke="none" stroke-width="0"/>
 
-  <!-- Eagle animation with 8-directional support and proper rotation -->
-  <g id="eagleContainer" filter="url(#glow)">
+  <!-- Eagle animation container with 8-directional support -->
+  <g id="eagleContainer">
     <g id="eagleMoving">
-      <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" 
-            style="transform-origin: center center; will-change: transform;">🦅
-        <animateMotion dur="24s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1">
-          <mpath href="#flightPath"/>
-        </animateMotion>
-        <!-- Adaptive rotation for 8-directional movement -->
-        <animateTransform 
-          attributeName="transform" 
-          type="rotate"
-          dur="24s" 
-          repeatCount="indefinite"
-          keyPoints="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
-          keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
-          values="0 0 0;45 0 0;90 0 0;135 0 0;180 0 0;225 0 0;270 0 0;315 0 0;360 0 0"
-        />
-      </text>
+      <g class="eagle-dir" style="animation-name: eagleDirection;">
+        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">→</text>
+      </g>
+      <g class="eagle-dir" style="animation-name: eagleDirection1;">
+        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">↗</text>
+      </g>
+      <g class="eagle-dir" style="animation-name: eagleDirection2;">
+        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">↑</text>
+      </g>
+      <g class="eagle-dir" style="animation-name: eagleDirection3;">
+        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">↖</text>
+      </g>
+      <g class="eagle-dir" style="animation-name: eagleDirection4;">
+        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">←</text>
+      </g>
+      <g class="eagle-dir" style="animation-name: eagleDirection5;">
+        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">↙</text>
+      </g>
+      <g class="eagle-dir" style="animation-name: eagleDirection6;">
+        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">↓</text>
+      </g>
+      <g class="eagle-dir" style="animation-name: eagleDirection7;">
+        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">↘</text>
+      </g>
+      <animateMotion dur="24s" repeatCount="indefinite">
+        <mpath href="#flightPath"/>
+      </animateMotion>
     </g>
   </g>
 
   <!-- Stats panel -->
   <rect x="40" y="265" width="900" height="60" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1" opacity="0.9"/>
 
-  <!-- Stats with FIXED TEXT VALUES -->
+  <!-- Stats with FIXED TEXT VALUES - NO EMPTY LABELS -->
   <g>
     <!-- Commits Eaten -->
     <text x="100" y="285" class="label">Commits Eaten</text>
@@ -240,4 +349,6 @@ print(f"   • Commits Eaten: {commits_eaten}")
 print(f"   • Target Days: {len(targets)}")
 print(f"   • Total Contributions: {sum(d['count'] for d in days)}")
 print(f"   • Path: {len(path_days)} waypoints")
-print(f"   • Animation: 8-directional adaptive rotation")
+print(f"   • Animation: 8-directional adaptive with opacity cycling")
+print(f"   • NO BUBBLES: All circles removed")
+print(f"   • NO LINES: All visible paths removed")
