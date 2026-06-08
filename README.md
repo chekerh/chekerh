@@ -1,34 +1,57 @@
 <!-- Animated Banner -->
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=wave&height=200&text=Cheker%20Hassan&fontAlign=50&fontColor=ffffff&color=0:0f172a,100:0ea5e9" alt="banner"/>
+  <img 
+    src="https://capsule-render.vercel.app/api?type=waving&height=240&text=Cheker%20Hassan&fontAlign=50&fontAlignY=32&fontSize=64&fontColor=ffffff&color=0:020617,45:0f172a,100:0ea5e9&animation=fadeIn" 
+    alt="Cheker Hassan Banner"
+  />
 </p>
 
 <h1 align="center">Hey 👋 I'm Cheker Hassan</h1>
 
-<h3 align="center">💻 Product-Minded Software Engineer • 📱 Mobile & Full-Stack Developer • 🧠 AI Builder • 🇹🇳 ESPRIT</h3>
+<h3 align="center">
+  💻 Product-Minded Software Engineer • 📱 Mobile & Full-Stack Developer • 🧠 AI Builder • 🇹🇳 ESPRIT
+</h3>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Software%20Builder-International%20Engineering%20Teams-0ea5e9?style=for-the-badge&labelColor=020617" />
+  <img src="https://img.shields.io/badge/Full--Stack-Mobile%20%7C%20AI%20%7C%20DevOps-111827?style=for-the-badge&labelColor=0ea5e9" />
+  <img src="https://img.shields.io/badge/Based%20in-Nabeul%2C%20Tunisia-38bdf8?style=for-the-badge&labelColor=020617" />
+</p>
 
 ---
 
-## 🌟 About Me
+## 🧑‍🚀 Portfolio Identity
 
-> I’m **Cheker Hassan**, a **4th-year Software Engineering student at ESPRIT**, based in **Nabeul, Tunisia**.
+<table>
+  <tr>
+    <td width="62%" valign="middle">
 
-> My engineering path started in **2015** with laptop repair curiosity, game-development experiments, and a strong culture of building and fixing things.
+### Software builder for international engineering teams
 
-> Today, I build practical software across **full-stack web**, **mobile apps**, **AI tools**, **DevOps**, **security readiness**, and **IoT/RFID systems**.
+I’m **Cheker Hassan**, a **4th-year Software Engineering student at ESPRIT**, based in **Nabeul, Tunisia**.
 
-> I enjoy turning ambiguous ideas into **architecture, Jira tasks, working prototypes, documentation, QA/security reviews, and demo-ready products**.
+My engineering path started in **2015** with laptop repair curiosity, game-development experiments, and a strong culture of building and fixing things.
 
-> My current focus is building product systems like **CogniCare**, **WayFinder**, **Sahara / MyOwnCursor**, **Attaque**, and **UtopiaHire**.
+Today, I build practical software across **full-stack web**, **mobile apps**, **AI tools**, **DevOps**, **security readiness**, and **IoT/RFID systems**.
 
-📚 **Currently focused on:** Full-Stack Engineering • Mobile Development • AI Integration • DevOps • Product Systems
+I enjoy turning ambiguous ideas into **architecture, Jira tasks, working prototypes, documentation, QA/security reviews, and demo-ready products**.
 
-⚙️ **Love working with:** TypeScript • Java • Kotlin • SwiftUI • NestJS • React • MongoDB • Docker • AI Tools
+<br/>
 
-🎯 **Goal:** Build useful, scalable, and human-centered software that solves real problems.
-
+📚 **Currently focused on:** Full-Stack Engineering • Mobile Development • AI Integration • DevOps • Product Systems  
+⚙️ **Love working with:** TypeScript • Java • Kotlin • SwiftUI • NestJS • React • MongoDB • Docker • AI Tools  
+🎯 **Goal:** Build useful, scalable, and human-centered software that solves real problems.  
 💡 **Motto:** Your imagination is my limit.
+
+  </td>
+  <td width="38%" align="center" valign="middle">
+    <img src="./assets/pose-wave.webp" width="300" alt="Cheker Hassan character waving" />
+    <br/>
+    <sub><b>Cogni</b> — portfolio guide</sub>
+  </td>
+  </tr>
+</table>
 
 ---
 
@@ -64,7 +87,11 @@
 
 ---
 
-## 🚀 Featured Projects
+## 🚀 Featured Systems
+
+<table>
+  <tr>
+    <td width="50%">
 
 ### 🧩 CogniCare Ecosystem
 
@@ -72,11 +99,20 @@ A social-impact care platform built around autism-care workflows, mobile access,
 
 `Flutter` `NestJS` `MongoDB` `React` `Jira` `Docker` `Jenkins` `SonarQube`
 
+  </td>
+  <td width="50%">
+
 ### 🧭 WayFinder Travel Platform
 
 A cross-platform travel discovery and booking system with Android, iOS, backend APIs, authentication, booking/payment flows, WebSockets, push notifications, and AI travel assistance.
 
 `Kotlin` `Jetpack Compose` `SwiftUI` `NestJS` `MongoDB` `Redis` `Swagger`
+
+  </td>
+  </tr>
+
+  <tr>
+    <td width="50%">
 
 ### 🧠 Sahara / MyOwnCursor
 
@@ -84,11 +120,20 @@ A local-first AI IDE built with desktop tooling, Monaco editor, terminal integra
 
 `Electron` `React` `TypeScript` `Monaco` `SQLite` `Express` `Ollama`
 
+  </td>
+  <td width="50%">
+
 ### 🛡️ Attaque Security Readiness Platform
 
 A defensive security-readiness platform focused on authorized checks, reports, learning modules, community features, async jobs, and secure backend workflows.
 
 `Next.js` `Fastify` `Prisma` `PostgreSQL` `Redis` `BullMQ` `JWT`
+
+  </td>
+  </tr>
+
+  <tr>
+    <td width="50%">
 
 ### 📄 UtopiaHire Career Tool
 
@@ -96,11 +141,18 @@ An AI-powered career-support platform for resume review, rewriting workflows, ad
 
 `React` `Vite` `TypeScript` `Express` `MongoDB` `OpenAI API`
 
+  </td>
+  <td width="50%">
+
 ### 🏷️ Systeme de Pointage
 
 An RFID attendance and management system connecting hardware logic with a Flask dashboard, SQLite logs, employee monitoring, and reporting.
 
 `Arduino` `RFID` `Python` `Flask` `SQLite`
+
+  </td>
+  </tr>
+</table>
 
 ---
 
@@ -117,21 +169,68 @@ An RFID attendance and management system connecting hardware logic with a Flask 
 
 ## 🌍 Languages
 
-`Arabic` Native • `French` Fluent • `English` Advanced • `German` Learning
+<p align="center">
+  <img src="https://img.shields.io/badge/Arabic-Native-0ea5e9?style=for-the-badge&labelColor=020617" />
+  <img src="https://img.shields.io/badge/French-Fluent-0ea5e9?style=for-the-badge&labelColor=020617" />
+  <img src="https://img.shields.io/badge/English-Advanced-0ea5e9?style=for-the-badge&labelColor=020617" />
+  <img src="https://img.shields.io/badge/German-Learning-0ea5e9?style=for-the-badge&labelColor=020617" />
+</p>
 
 ---
 
-## 📈 GitHub Analytics (Auto-Updating)
+## 🧑‍💻 Engineering Style
+
+<table>
+  <tr>
+    <td width="35%" align="center">
+      <img src="./assets/pose-code.webp" width="260" alt="Cheker Hassan character coding" />
+    </td>
+    <td width="65%">
+
+I build systems with a product mindset: not just code, but **requirements, architecture, delivery planning, testing, documentation, and release readiness**.
+
+My workflow is **AI-accelerated but review-grounded**: I use AI to move faster, then validate through integration, code review, testing, and working demos.
+
+I care about software that is practical, understandable, and useful for real users.
+
+  </td>
+  </tr>
+</table>
+
+---
+
+## 📈 GitHub Analytics
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=chekerh&show_icons=true&theme=tokyonight" height="165" />
-  <img src="https://github-readme-streak-stats.herokuapp.com?user=chekerh&theme=tokyonight" height="165" />
+  <img src="https://github-readme-stats.vercel.app/api?username=chekerh&show_icons=true&theme=tokyonight&hide_border=true&bg_color=020617&title_color=38bdf8&icon_color=38bdf8&text_color=ffffff" height="165" />
+  <img src="https://github-readme-streak-stats.herokuapp.com?user=chekerh&theme=tokyonight&hide_border=true&background=020617&ring=38bdf8&fire=38bdf8&currStreakLabel=38bdf8" height="165" />
 </p>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=chekerh&layout=compact&theme=tokyonight" height="165" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=chekerh&layout=compact&theme=tokyonight&hide_border=true&bg_color=020617&title_color=38bdf8&text_color=ffffff" height="165" />
+</p>
+
+---
+
+## 🐍 Contribution Snake
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/chekerh/chekerh/output/github-contribution-grid-snake-dark.svg" alt="GitHub contribution snake animation" />
+</p>
+
+---
+
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=chekerh&color=0ea5e9&style=for-the-badge" />
 </p>
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=chekerh&color=blue&style=for-the-badge" />
+  <b>Built with honesty, intelligent work, and the ambition to leave every system better than I found it.</b>
+</p>
+
+<p align="center">
+  <img 
+    src="https://capsule-render.vercel.app/api?type=waving&height=120&section=footer&color=0:020617,50:0f172a,100:0ea5e9" 
+    alt="footer wave"
+  />
 </p>
