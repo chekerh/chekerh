@@ -1,10 +1,7 @@
-<!-- Animated Banner -->
+<!-- Portfolio Hero -->
 
 <p align="center">
-  <img 
-    src="https://capsule-render.vercel.app/api?type=waving&height=220&text=Cheker%20Hassan&fontAlign=50&fontAlignY=35&fontSize=58&fontColor=ffffff&color=0:020617,45:0f172a,100:0ea5e9&animation=fadeIn" 
-    alt="Cheker Hassan Banner"
-  />
+  <img src="./assets/hero.svg" alt="Cheker Hassan portfolio hero" width="100%" />
 </p>
 
 <h1 align="center">Hey 👋 I'm Cheker Hassan</h1>
@@ -48,7 +45,7 @@ I enjoy turning ambiguous ideas into **architecture, Jira tasks, working prototy
   <td width="38%" align="center" valign="middle">
     <img src="./assets/pose-wave.webp" width="300" alt="Cheker Hassan character waving" />
     <br/>
-    <sub><b>Cogni</b> — portfolio guide</sub>
+    <sub><b>Choko</b> — portfolio guide</sub>
   </td>
   </tr>
 </table>
@@ -263,18 +260,6 @@ I care about software that is practical, understandable, and useful for real use
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/chekerh/chekerh/output/github-contribution-grid-snake-dark.svg" alt="GitHub contribution snake animation" />
-</p>
-
----
-
-## 🧭 Portfolio Guide
-
-<p align="center">
-  <img src="./assets/pose-wave.webp" width="160" />
-  <img src="./assets/pose-code.webp" width="160" />
-  <img src="./assets/pose-globe.webp" width="160" />
-  <img src="./assets/pose-education.webp" width="160" />
-  <img src="./assets/pose-experience.webp" width="160" />
 </p>
 
 ---
