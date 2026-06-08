@@ -2,6 +2,7 @@ import os
 import json
 import urllib.request
 from datetime import date, timedelta
+import math
 
 USERNAME = os.environ.get("GITHUB_USERNAME", "chekerh")
 TOKEN = os.environ["GITHUB_TOKEN"]
@@ -59,14 +60,19 @@ for week_index, week in enumerate(weeks):
             "y": 85 + day_index * 14,
         })
 
-# Get lowest-commit days (targets to eat)
-targets = sorted(days, key=lambda d: (d["count"], d["date"]))[:12]
+# Get lowest-commit days FIRST (eagle eats these)
+targets = sorted(days, key=lambda d: (d["count"], d["date"]))[:14]
 
-# Add a few high-activity days for celebration
-high_days = sorted(days, key=lambda d: d["count"], reverse=True)[:4]
+# Calculate total commits from target days (commits eaten)
+commits_eaten = sum(d["count"] for d in targets)
+
+# High-activity days as final victories
+high_days = sorted(days, key=lambda d: d["count"], reverse=True)[:3]
 path_days = targets + high_days
 
 rects = []
+target_indices = set(id(d) for d in targets)
+
 for d in days:
     fill = d["color"] if d["count"] > 0 else "#161b22"
     opacity = "1" if d["count"] > 0 else "0.75"
@@ -74,7 +80,16 @@ for d in days:
         f'<rect x="{d["x"]}" y="{d["y"]}" width="10" height="10" rx="2" fill="{fill}" opacity="{opacity}"/>'
     )
 
-# SVG with professional design - NO BUBBLES/CIRCLES
+# Create eagle direction variants (for animation direction changes)
+eagle_right = "🦅"
+eagle_left = "🦅"  # Will be flipped with CSS transform
+eagle_up = "🦅"
+eagle_down = "🦅"
+
+# Create motion path for smooth animation
+path_points = " ".join([f"{d['x'] + 5},{d['y'] + 5}" for d in path_days])
+
+# SVG with FIXED TEXT and PROPER EAGLE ANIMATION
 svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -140,43 +155,62 @@ svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.
 
   <!-- Header -->
   <text x="50" y="42" class="title">🦅 Contribution Eagle</text>
-  <text x="50" y="62" class="subtitle">Flying through your contribution calendar, hunting low-activity days</text>
+  <text x="50" y="62" class="subtitle">Hunting low-activity days • Commits consumed · Strategy optimization</text>
 
   <!-- Contribution grid -->
   <g id="gridGroup">
     {''.join(rects)}
   </g>
 
-  <!-- Flight path (dashed line) -->
-  <polyline points="{' '.join([f'{d["x"] + 5},{d["y"] + 5}' for d in path_days])}" 
-    fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 6" opacity="0.5"/>
+  <!-- Flight path (dashed line) - NO BUBBLES -->
+  <polyline points="{path_points}" 
+    fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 6" opacity="0.4"/>
 
-  <!-- Eagle animation (moving along path with transformations) -->
-  <g id="eagleGroup" filter="url(#glow)">
-    <text x="55" y="90" font-size="32" fill="#ffffff" text-anchor="middle">🦅</text>
-    <animateMotion dur="18s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1">
-      <mpath href="#flightPath"/>
-    </animateMotion>
+  <!-- Eagle animation with directional movement -->
+  <g id="eagleContainer" filter="url(#glow)">
+    <!-- Main eagle moving along path -->
+    <g id="eagleMoving">
+      <g id="eagleRight">
+        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em">🦅</text>
+      </g>
+      <g id="eagleLeft" opacity="0" transform="scale(-1, 1)">
+        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em">🦅</text>
+      </g>
+      <g id="eagleUp" opacity="0">
+        <text x="0" y="-8" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em">🦅</text>
+      </g>
+      <g id="eagleDown" opacity="0">
+        <text x="0" y="8" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em">🦅</text>
+      </g>
+      <animateMotion dur="22s" repeatCount="indefinite" rotate="auto">
+        <mpath href="#flightPath"/>
+      </animateMotion>
+    </g>
   </g>
 
-  <path id="flightPath" d="M {' L '.join([f'{d["x"] + 5} {d["y"] + 5}' for d in path_days])}" 
-    fill="none" stroke="transparent" stroke-width="1"/>
+  <path id="flightPath" d="M {path_points}" fill="none" stroke="transparent"/>
 
   <!-- Stats panel -->
   <rect x="40" y="265" width="900" height="60" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1" opacity="0.9"/>
 
-  <!-- Stats labels and values -->
-  <text x="90" y="285" class="label">Target Days</text>
-  <text x="90" y="310" class="metric">{len(path_days)}</text>
+  <!-- Stats with FIXED TEXT VALUES -->
+  <g>
+    <!-- Commits Eaten -->
+    <text x="100" y="285" class="label">Commits Eaten</text>
+    <text x="100" y="310" class="metric">{commits_eaten}</text>
 
-  <text x="280" y="285" class="label">Status</text>
-  <text x="280" y="310" class="metric">Active Hunt</text>
+    <!-- Target Days -->
+    <text x="280" y="285" class="label">Target Days</text>
+    <text x="280" y="310" class="metric">{len(targets)}</text>
 
-  <text x="500" y="285" class="label">Total Contributions</text>
-  <text x="500" y="310" class="metric">{sum(d["count"] for d in days)}</text>
+    <!-- Total Contributions -->
+    <text x="480" y="285" class="label">Total Contributions</text>
+    <text x="480" y="310" class="metric">{sum(d["count"] for d in days)}</text>
 
-  <text x="750" y="285" class="label">Best Day</text>
-  <text x="750" y="310" class="metric">{max(d["count"] for d in days)} commits</text>
+    <!-- Hunt Status -->
+    <text x="750" y="285" class="label">Hunt Status</text>
+    <text x="750" y="310" class="metric">Active</text>
+  </g>
 </svg>
 '''
 
@@ -186,4 +220,8 @@ with open("dist/github-contribution-eagle.svg", "w", encoding="utf-8") as f:
     f.write(svg)
 
 print("✅ Generated dist/github-contribution-eagle.svg")
-print(f"📊 Stats: {len(path_days)} target days, {sum(d['count'] for d in days)} total commits")
+print(f"🦅 Eagle Statistics:")
+print(f"   • Commits Eaten: {commits_eaten}")
+print(f"   • Target Days: {len(targets)}")
+print(f"   • Total Contributions: {sum(d['count'] for d in days)}")
+print(f"   • Path: {len(path_days)} waypoints")
