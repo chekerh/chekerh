@@ -9,7 +9,7 @@ TOKEN = os.environ["GITHUB_TOKEN"]
 today = date.today()
 start = today - timedelta(days=365)
 
-query = """
+query = '''
 query($login: String!, $from: DateTime!, $to: DateTime!) {
   user(login: $login) {
     contributionsCollection(from: $from, to: $to) {
@@ -26,7 +26,7 @@ query($login: String!, $from: DateTime!, $to: DateTime!) {
     }
   }
 }
-"""
+'''
 
 variables = {
     "login": USERNAME,
@@ -46,6 +46,9 @@ request = urllib.request.Request(
 with urllib.request.urlopen(request) as response:
     data = json.loads(response.read().decode("utf-8"))
 
+if "errors" in data:
+    raise RuntimeError(json.dumps(data["errors"], indent=2))
+
 weeks = data["data"]["user"]["contributionsCollection"]["contributionCalendar"]["weeks"]
 
 days = []
@@ -53,288 +56,130 @@ for week_index, week in enumerate(weeks):
     for day_index, day in enumerate(week["contributionDays"]):
         days.append({
             "date": day["date"],
-            "count": day["contributionCount"],
+            "count": int(day["contributionCount"]),
             "color": day["color"],
             "x": 55 + week_index * 14,
-            "y": 85 + day_index * 14,
+            "y": 88 + day_index * 14,
         })
 
-# Get lowest-commit days FIRST (eagle eats these)
 targets = sorted(days, key=lambda d: (d["count"], d["date"]))[:14]
-
-# Calculate total commits from target days (commits eaten)
-commits_eaten = sum(d["count"] for d in targets)
-
-# High-activity days as final victories
 high_days = sorted(days, key=lambda d: d["count"], reverse=True)[:3]
 path_days = targets + high_days
 
-# Build contribution grid rectangles
+commits_eaten = sum(d["count"] for d in targets)
+total_contributions = sum(d["count"] for d in days)
+best_day = max(days, key=lambda d: d["count"])
+
 rects = []
+target_dates = {d["date"] for d in targets}
+
 for d in days:
     fill = d["color"] if d["count"] > 0 else "#161b22"
-    opacity = "1" if d["count"] > 0 else "0.75"
+    opacity = "1" if d["count"] > 0 else "0.70"
+    stroke = "#38bdf8" if d["date"] in target_dates else "none"
+    stroke_width = "0.9" if d["date"] in target_dates else "0"
     rects.append(
-        f'<rect x="{d["x"]}" y="{d["y"]}" width="10" height="10" rx="2" fill="{fill}" opacity="{opacity}"/>'
+        f'<rect x="{d["x"]}" y="{d["y"]}" width="10" height="10" rx="2" '
+        f'fill="{fill}" opacity="{opacity}" stroke="{stroke}" stroke-width="{stroke_width}"/>'
     )
 
-# Create invisible flight path - NO VISIBLE STROKE
-path_points = " ".join([f"{d['x'] + 5},{d['y'] + 5}" for d in path_days])
+path_d = "M " + " L ".join([f'{d["x"] + 5} {d["y"] + 5}' for d in path_days])
+target_dates_text = " • ".join([f'{d["date"]}({d["count"]})' for d in targets[:5]])
 
-# Create 8-directional eagle animations using opacity transitions
-# Each direction shows/hides based on animation progress
-eagle_animations = []
-directions = [
-    ("→", 0, "0deg"),      # Right
-    ("↗", 1, "45deg"),     # Top-right
-    ("↑", 2, "90deg"),     # Up
-    ("↖", 3, "135deg"),    # Top-left
-    ("←", 4, "180deg"),    # Left
-    ("↙", 5, "225deg"),    # Bottom-left
-    ("↓", 6, "270deg"),    # Down
-    ("↘", 7, "315deg"),    # Bottom-right
-]
-
-# Build eagle keyframes for smooth direction cycling
-eagle_keyframes = '''
-    <style>
-      @keyframes eagleDirection {
-        0% { opacity: 1; }
-        12.5% { opacity: 0; }
-        100% { opacity: 0; }
-      }
-      @keyframes eagleDirection1 {
-        0% { opacity: 0; }
-        12.5% { opacity: 1; }
-        25% { opacity: 0; }
-        100% { opacity: 0; }
-      }
-      @keyframes eagleDirection2 {
-        0% { opacity: 0; }
-        25% { opacity: 1; }
-        37.5% { opacity: 0; }
-        100% { opacity: 0; }
-      }
-      @keyframes eagleDirection3 {
-        0% { opacity: 0; }
-        37.5% { opacity: 1; }
-        50% { opacity: 0; }
-        100% { opacity: 0; }
-      }
-      @keyframes eagleDirection4 {
-        0% { opacity: 0; }
-        50% { opacity: 1; }
-        62.5% { opacity: 0; }
-        100% { opacity: 0; }
-      }
-      @keyframes eagleDirection5 {
-        0% { opacity: 0; }
-        62.5% { opacity: 1; }
-        75% { opacity: 0; }
-        100% { opacity: 0; }
-      }
-      @keyframes eagleDirection6 {
-        0% { opacity: 0; }
-        75% { opacity: 1; }
-        87.5% { opacity: 0; }
-        100% { opacity: 0; }
-      }
-      @keyframes eagleDirection7 {
-        0% { opacity: 0; }
-        87.5% { opacity: 1; }
-        100% { opacity: 0; }
-      }
-      .eagle-dir {
-        animation-duration: 24s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
-      }
-    </style>
-'''
-
-# Build eagle direction groups
-eagle_groups = ""
-for idx, (symbol, order, angle) in enumerate(directions):
-    eagle_groups += f'''
-    <g class="eagle-dir" style="animation-name: eagleDirection{idx};">
-      <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">{symbol}</text>
-    </g>
-    '''
-
-# Main SVG
 svg = f'''<svg width="980" height="340" viewBox="0 0 980 340" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#020617;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#0f172a;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#0e4a7f;stop-opacity:1" />
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="55%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#0e4a7f"/>
     </linearGradient>
 
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="2.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-      
       .title {{
-        font-family: 'Inter', Arial, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
         font-size: 28px;
         font-weight: 800;
         fill: #ffffff;
-        letter-spacing: -0.5px;
       }}
 
       .subtitle {{
-        font-family: 'Inter', Arial, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
         font-size: 13px;
         fill: #94a3b8;
-        font-weight: 500;
-        letter-spacing: 0.3px;
       }}
 
       .metric {{
-        font-family: 'Inter', Arial, sans-serif;
-        font-size: 16px;
-        font-weight: 700;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 17px;
+        font-weight: 800;
         fill: #38bdf8;
         text-anchor: middle;
       }}
 
       .label {{
-        font-family: 'Inter', Arial, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
         font-size: 11px;
-        fill: #64748b;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
+        fill: #94a3b8;
+        font-weight: 700;
+        text-anchor: middle;
       }}
 
-      @keyframes eagleDirection {{
-        0% {{ opacity: 1; }}
-        12.5% {{ opacity: 0; }}
-        100% {{ opacity: 0; }}
-      }}
-      @keyframes eagleDirection1 {{
-        0% {{ opacity: 0; }}
-        12.5% {{ opacity: 1; }}
-        25% {{ opacity: 0; }}
-        100% {{ opacity: 0; }}
-      }}
-      @keyframes eagleDirection2 {{
-        0% {{ opacity: 0; }}
-        25% {{ opacity: 1; }}
-        37.5% {{ opacity: 0; }}
-        100% {{ opacity: 0; }}
-      }}
-      @keyframes eagleDirection3 {{
-        0% {{ opacity: 0; }}
-        37.5% {{ opacity: 1; }}
-        50% {{ opacity: 0; }}
-        100% {{ opacity: 0; }}
-      }}
-      @keyframes eagleDirection4 {{
-        0% {{ opacity: 0; }}
-        50% {{ opacity: 1; }}
-        62.5% {{ opacity: 0; }}
-        100% {{ opacity: 0; }}
-      }}
-      @keyframes eagleDirection5 {{
-        0% {{ opacity: 0; }}
-        62.5% {{ opacity: 1; }}
-        75% {{ opacity: 0; }}
-        100% {{ opacity: 0; }}
-      }}
-      @keyframes eagleDirection6 {{
-        0% {{ opacity: 0; }}
-        75% {{ opacity: 1; }}
-        87.5% {{ opacity: 0; }}
-        100% {{ opacity: 0; }}
-      }}
-      @keyframes eagleDirection7 {{
-        0% {{ opacity: 0; }}
-        87.5% {{ opacity: 1; }}
-        100% {{ opacity: 0; }}
-      }}
-      .eagle-dir {{
-        animation-duration: 24s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
+      .note {{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        fill: #64748b;
       }}
     </style>
   </defs>
 
-  <!-- Background -->
   <rect width="980" height="340" rx="18" fill="url(#bgGradient)" stroke="#1e293b" stroke-width="1"/>
 
-  <!-- Decorative waves -->
   <g opacity="0.08">
     <path d="M0 80 Q245 40 490 80 T980 80" fill="none" stroke="#38bdf8" stroke-width="2"/>
     <path d="M0 120 Q245 100 490 120 T980 120" fill="none" stroke="#38bdf8" stroke-width="1.5"/>
   </g>
 
-  <!-- Header -->
-  <text x="50" y="42" class="title">🦅 Contribution Eagle</text>
-  <text x="50" y="62" class="subtitle">Hunting low-activity days • 8-directional adaptive flight • Real-time tracking</text>
+  <text x="50" y="42" class="title">Contribution Eagle</text>
+  <text x="50" y="62" class="subtitle">Hunting the lowest-commit days first, then flying toward high-focus days.</text>
 
-  <!-- Contribution grid -->
   <g id="gridGroup">
     {''.join(rects)}
   </g>
 
-  <!-- INVISIBLE flight path - NO BUBBLES, NO VISIBLE LINES -->
-  <path id="flightPath" d="M {path_points}" fill="none" stroke="none" stroke-width="0"/>
+  <!-- Invisible route only. No bubbles, no dashed guide lines. -->
+  <path id="flightPath" d="{path_d}" fill="none" stroke="none" stroke-width="0"/>
 
-  <!-- Eagle animation container with 8-directional support -->
-  <g id="eagleContainer">
-    <g id="eagleMoving">
-      <g class="eagle-dir" style="animation-name: eagleDirection;">
-        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">→</text>
-      </g>
-      <g class="eagle-dir" style="animation-name: eagleDirection1;">
-        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">↗</text>
-      </g>
-      <g class="eagle-dir" style="animation-name: eagleDirection2;">
-        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">↑</text>
-      </g>
-      <g class="eagle-dir" style="animation-name: eagleDirection3;">
-        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">↖</text>
-      </g>
-      <g class="eagle-dir" style="animation-name: eagleDirection4;">
-        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">←</text>
-      </g>
-      <g class="eagle-dir" style="animation-name: eagleDirection5;">
-        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">↙</text>
-      </g>
-      <g class="eagle-dir" style="animation-name: eagleDirection6;">
-        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">↓</text>
-      </g>
-      <g class="eagle-dir" style="animation-name: eagleDirection7;">
-        <text x="0" y="0" font-size="36" fill="#ffffff" text-anchor="middle" dy="0.3em" style="filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.8));">↘</text>
-      </g>
-      <animateMotion dur="24s" repeatCount="indefinite">
+  <g filter="url(#softGlow)">
+    <text font-size="34" text-anchor="middle" dominant-baseline="middle">🦅
+      <animateMotion dur="22s" repeatCount="indefinite" rotate="auto">
         <mpath href="#flightPath"/>
       </animateMotion>
-    </g>
+    </text>
   </g>
 
-  <!-- Stats panel -->
-  <rect x="40" y="265" width="900" height="60" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1" opacity="0.9"/>
+  <rect x="40" y="263" width="900" height="62" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1" opacity="0.92"/>
 
-  <!-- Stats with FIXED TEXT VALUES - NO EMPTY LABELS -->
-  <g>
-    <!-- Commits Eaten -->
-    <text x="100" y="285" class="label">Commits Eaten</text>
-    <text x="100" y="310" class="metric">{commits_eaten}</text>
+  <text x="115" y="286" class="label">COMMITS EATEN</text>
+  <text x="115" y="311" class="metric">{commits_eaten}</text>
 
-    <!-- Target Days -->
-    <text x="280" y="285" class="label">Target Days</text>
-    <text x="280" y="310" class="metric">{len(targets)}</text>
+  <text x="300" y="286" class="label">TARGET DAYS</text>
+  <text x="300" y="311" class="metric">{len(targets)}</text>
 
-    <!-- Total Contributions -->
-    <text x="480" y="285" class="label">Total Contributions</text>
-    <text x="480" y="310" class="metric">{sum(d["count"] for d in days)}</text>
+  <text x="500" y="286" class="label">TOTAL CONTRIBUTIONS</text>
+  <text x="500" y="311" class="metric">{total_contributions}</text>
 
-    <!-- Hunt Status -->
-    <text x="750" y="285" class="label">Hunt Status</text>
-    <text x="750" y="310" class="metric">Active</text>
-  </g>
+  <text x="730" y="286" class="label">BEST DAY</text>
+  <text x="730" y="311" class="metric">{best_day["count"]} commits</text>
+
+  <text x="50" y="250" class="note">First targets: {target_dates_text}</text>
 </svg>
 '''
 
@@ -344,11 +189,7 @@ with open("dist/github-contribution-eagle.svg", "w", encoding="utf-8") as f:
     f.write(svg)
 
 print("✅ Generated dist/github-contribution-eagle.svg")
-print(f"🦅 Eagle Statistics:")
-print(f"   • Commits Eaten: {commits_eaten}")
-print(f"   • Target Days: {len(targets)}")
-print(f"   • Total Contributions: {sum(d['count'] for d in days)}")
-print(f"   • Path: {len(path_days)} waypoints")
-print(f"   • Animation: 8-directional adaptive with opacity cycling")
-print(f"   • NO BUBBLES: All circles removed")
-print(f"   • NO LINES: All visible paths removed")
+print(f"🦅 Commits eaten: {commits_eaten}")
+print(f"🎯 Target days: {len(targets)}")
+print(f"📊 Total contributions: {total_contributions}")
+print(f"🏆 Best day: {best_day['date']} with {best_day['count']} commits")
