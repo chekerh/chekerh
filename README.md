@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/cheker-github-hero-animated.gif" alt="Cheker Hassan, software engineer, building since 2015." width="100%" />
+  <img src="./assets/hero.svg" alt="Cheker Hassan, software engineer, building since 2015." width="100%" />
 </p>
 
 <table>
