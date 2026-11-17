@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/hero.svg" alt="Cheker Hassan, software engineer. A surfer rides a wave at sunset." width="100%" />
+  <img src="./assets/cheker-github-hero-animated.gif" alt="Cheker Hassan, software engineer, building since 2015." width="100%" />
 </p>
 
 <table>
@@ -80,8 +80,8 @@ Defensive security-readiness platform with authorized checks, reports, learning 
 </p>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=chekerh&show_icons=true&hide_border=true&bg_color=0a0018&title_color=ff2e93&icon_color=ffd23f&text_color=ffffff&height=150" height="150" alt="GitHub stats" />
-  <img src="https://github-readme-streak-stats.herokuapp.com?user=chekerh&hide_border=true&background=0a0018&ring=ff2e93&fire=ffd23f&currStreakLabel=ffd23f&sideLabels=ffffff&currStreakNum=ffffff&sideNums=ffffff&dates=ffffff" height="150" alt="GitHub streak" />
+  <img src="https://github-readme-stats.vercel.app/api?username=chekerh&show_icons=true&hide_border=true&bg_color=0a0018&title_color=ff4fb0&icon_color=3fd0d6&text_color=ffffff&height=150" height="150" alt="GitHub stats" />
+  <img src="https://github-readme-streak-stats.herokuapp.com?user=chekerh&hide_border=true&background=0a0018&ring=ff4fb0&fire=3fd0d6&currStreakLabel=3fd0d6&sideLabels=ffffff&currStreakNum=ffffff&sideNums=ffffff&dates=ffffff" height="150" alt="GitHub streak" />
 </p>
 
 <p align="center">
@@ -90,6 +90,4 @@ Defensive security-readiness platform with authorized checks, reports, learning 
   Nabeul, Tunisia
 </p>
 
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=100&section=footer&color=0:0a0018,50:ff2e93,100:ff7a1a" alt="" width="100%" />
-</p>
+<img src="./assets/footer.svg" width="100%" alt="Cheker Hassan, Nabeul, Tunisia" />
