@@ -1,25 +1,31 @@
-<!-- ==================== ANIMATED HERO ==================== -->
+<!-- ==================== ANIMATED TOP ==================== -->
 <p align="center">
-  <img src="./assets/hero.svg" alt="Cheker Hassan — Systems Builder" width="100%" />
+  <img src="./assets/hero.svg" alt="Cheker Hassan" width="100%" />
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=22&duration=3200&pause=1200&color=38BDF8&center=true&vCenter=true&multiline=true&repeat=true&width=680&height=80&lines=5th-year+Software+Engineering+%40+ESPRIT;Building+Sahara+%E2%80%94+AI+collaboration+for+universities;Available+for+opportunities+after+graduation" alt="Typing animation" />
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=26&duration=2800&pause=900&color=38BDF8&center=true&vCenter=true&multiline=true&repeat=true&width=720&height=90&lines=Cheker+Hassan;5th-year+Software+Engineering+%40+ESPRIT;Building+Sahara+%E2%80%94+AI+for+universities;Available+after+graduation" alt="typing" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Building_Sahara-0ea5e9?style=for-the-badge&logo=vercel&logoColor=white" />
+  <img src="https://img.shields.io/badge/Internship-December_2026-22c55e?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Location-Nabeul,_Tunisia-64748b?style=for-the-badge" />
 </p>
 
 ---
 
-### Hey, I'm Cheker Hassan
+### Who I am
 
-**5th-year Software Engineering student at ESPRIT** · Nabeul, Tunisia  
-I graduate this year. In December I begin a 6-month internship focused on **Sahara**.
+I'm a **5th-year Software Engineering student at ESPRIT**.  
+I graduate this year. In December I start a 6-month internship where the main project is **Sahara**.
 
-I build end-to-end systems — from architecture and code to documentation, testing, and delivery.  
-I’ve been shipping software independently since 2015.
+I build real systems end-to-end — architecture, code, tests, documentation, and delivery.  
+I've been shipping software independently since 2015.
 
 <p align="center">
   <a href="https://chekerh.github.io/personal-portfolio/">
-    <img src="https://img.shields.io/badge/Discover_40%2B_projects-0ea5e9?style=for-the-badge&logo=github&logoColor=white" alt="Portfolio" />
+    <img src="https://img.shields.io/badge/🚀_Discover_40%2B_Projects-0ea5e9?style=for-the-badge&labelColor=0f172a" alt="Portfolio" />
   </a>
 </p>
 
@@ -27,22 +33,16 @@ I’ve been shipping software independently since 2015.
 
 ### Current Focus — Sahara
 
-**Sahara** is an AI collaboration platform first designed for ESPRIT (students, professors, and administration), then offered as a SaaS for any university or organization.
-
-- Administration assigns teachers and students to grades & subjects  
-- Teachers modernize courses and create groups with **shared AI context**  
-- Students work inside those groups with shared context and their own AI subscriptions  
-- Beginner-friendly preset bots so every role can start productively from day one  
-- Surfaces: Web · Mobile · Terminal  
-
-The long-term vision is a flexible AI workspace that works for universities, companies, associations, and individuals.
-
----
-
-### Stack
-
-```ts
-TypeScript · Java · Kotlin · Swift · Python
-React · Next.js · NestJS · Flutter · SwiftUI
-MongoDB · PostgreSQL · Redis · Docker · Jenkins
-Ollama · OpenAI · MCP
+```text
+┌─────────────────────────────────────────────────────────────┐
+│  SAHARA                                                     │
+│  AI collaboration platform for universities                 │
+│                                                             │
+│  • Administration → assign teachers & students              │
+│  • Teachers → modernize courses + create shared AI groups   │
+│  • Students → work inside shared context windows            │
+│  • Preset bots so every role is productive from day one     │
+│                                                             │
+│  Surfaces: Web  ·  Mobile  ·  Terminal                      │
+│  Vision: SaaS for any university / company / organization   │
+└─────────────────────────────────────────────────────────────┘
