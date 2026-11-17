@@ -1,81 +1,83 @@
 <p align="center">
-  <img src="./assets/hero.svg" alt="Cheker Hassan, software engineer. Loading Sahara." width="100%" />
+  <img src="./assets/hero.svg" alt="Cheker Hassan, software engineer. A surfer rides a wave at sunset." width="100%" />
 </p>
 
 <table>
   <tr>
     <td width="68%" valign="middle">
 
-### Hey, I'm Cheker Hassan 👋
+### Hey, I'm Cheker 👋
 
-Final-year software engineering student at **ESPRIT** (Nabeul, Tunisia), building software since 2015.
+I'm a software engineer from **Nabeul, Tunisia**, and I **graduate this year**.
 
-I turn rough ideas into working systems: architecture, code, tests, docs and a demo someone else can run. I use AI as leverage to shorten the distance between idea and product, then I review and verify everything myself.
+It started in 2015 with repairing laptops and making small games. Today I build full-stack products, mobile apps and AI systems, and I like the part where a vague idea turns into something people can actually use.
 
-**Right now:** a 6-month internship from December 2026, building **Sahara** for ESPRIT, then a final presentation and the jump to full-time engineer.
-**Open to:** international internships and junior engineering roles.
+I think of AI as a wave. The bottleneck is no longer typing code, it's thinking clearly, spotting a good idea and moving on it fast. So I stay in the water: build, learn what's missing, fix it, ship it.
 
   </td>
   <td width="32%" align="center" valign="middle">
-    <img src="./assets/pose-wave.webp" width="240" alt="Choko, the portfolio mascot, waving" />
+    <img src="./assets/pose-wave.webp" width="240" alt="Choko, my mascot, waving" />
   </td>
   </tr>
 </table>
 
-## Current mission: Sahara
+<img src="./assets/banner-player.svg" width="100%" alt="Player profile" />
 
-An AI collaboration platform for universities, built first for ESPRIT and designed to become a SaaS for any school, company or association.
-
-| Who | What they get |
+| | |
 |---|---|
-| **Administration** | Assign teachers and students to grades and subjects |
-| **Teachers** | Upload a `.pptx` or `.pdf` course, modernize it under quality rules, split the class into groups |
-| **Students** | A shared AI context per group, with their own subscriptions (Claude, Codex, OpenCode) or Sahara's |
-| **Everyone** | Beginner-friendly preset bots from day one, on web, mobile and terminal |
+| **Base** | Nabeul, Tunisia |
+| **Class** | Software engineer: AI systems, full stack, mobile |
+| **Playing since** | 2015 |
+| **Status** | Graduating this year. Open to international internships and junior engineering roles |
+| **Work style** | Explicit contracts, tested flows, a release path someone else can run. AI-accelerated, human-reviewed |
+| **Off duty** | Open-water swimming, bodybuilding, marathon running, game jams, fixing hardware |
+| **Languages** | Arabic (native) · French (fluent) · English (advanced) · German (learning) |
 
-On the roadmap: an opt-in room where students pool idle laptop compute to run bigger models for free.
-
-Sahara started as a cloud-native coding-agent harness: 100+ concurrent agents in isolated sandboxes, under 5 second environment startup, and a React control plane that streams live traces.
-
-## Side missions
+<img src="./assets/banner-missions.svg" width="100%" alt="Missions" />
 
 <table>
   <tr>
-    <td width="33%" valign="top">
+    <td width="50%" valign="top">
+
+**🏜️ Sahara** · *current mission*
+An AI collaboration platform for universities, companies and teams. Admins organize classes, teachers modernize their courses, and groups share an AI context. It grew out of a cloud-native coding-agent harness running 100+ concurrent agents in isolated sandboxes, with environment startup under 5 seconds.
+
+  </td>
+  <td width="50%" valign="top">
 
 **🧭 WayFinder**
-Travel platform on Android, iOS and a NestJS backend. Booking, payments, WebSockets, push, AI assistant.
+Travel platform on Android, iOS and a NestJS backend, with booking, payments, WebSockets, push notifications and an AI travel assistant.
 
   </td>
-  <td width="33%" valign="top">
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
 
 **🧩 CogniCare**
-Autism-care platform with mobile app, web dashboards, realtime chat and AI recommendations.
+A social-impact platform for autism care: mobile app, web dashboards, realtime chat and AI recommendations.
 
   </td>
-  <td width="33%" valign="top">
+  <td width="50%" valign="top">
 
 **🛡️ Attaque**
-Defensive security-readiness platform: authorized checks, reports, async jobs on BullMQ.
+Defensive security-readiness platform with authorized checks, reports, learning modules and async jobs on BullMQ.
 
   </td>
   </tr>
 </table>
 
-## Loadout
+<img src="./assets/banner-trophies.svg" width="100%" alt="Trophies" />
+
+🏆 **Global Game Jam 2025:** 4th of 375 participants, with a five-person team
+🥈 **RamathonX 1.0:** 2nd place in an individual problem-solving ideathon
+🤿 **MATE ROV 2019:** Tunisia winner, Arab Regional winner, U.S. international competitor
+🧑‍🏫 **Community:** programming-competition coach at ACM, IEEE challenge contributor, JCI Nabeul and Inactus member
+
+<img src="./assets/banner-loadout.svg" width="100%" alt="Loadout" />
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=ts,react,nextjs,nestjs,nodejs,java,kotlin,swift,flutter,python,mongodb,postgres,redis,docker,jenkins,git&perline=16" alt="Tech stack" />
 </p>
-
-## Trophies
-
-🏆 **Global Game Jam 2025:** 4th of 375 participants
-🥈 **RamathonX 1.0:** 2nd place, individual ideathon
-🤿 **MATE ROV 2019:** Tunisia winner, Arab Regional winner, U.S. international competitor
-🧑‍🏫 **ACM ESPRIT:** programming-competition coach · IEEE challenges · JCI Nabeul · Inactus ESPRIT
-
-**Languages:** Arabic (native) · French (fluent) · English (advanced) · German (learning)
 
 <p align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=chekerh&show_icons=true&hide_border=true&bg_color=0a0018&title_color=ff2e93&icon_color=ffd23f&text_color=ffffff&height=150" height="150" alt="GitHub stats" />
