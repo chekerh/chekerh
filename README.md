@@ -16,7 +16,7 @@ I think of AI as a wave. The bottleneck is no longer typing code, it's thinking 
 
   </td>
   <td width="32%" align="center" valign="middle">
-    <img src="./assets/Selfie-mascot.png.png" width="240" alt="Choko, my mascot, waving" />
+    <img src="./assets/Selfie-mascot.png" width="240" alt="Choko, my mascot, waving" />
   </td>
   </tr>
 </table>
